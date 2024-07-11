@@ -1,0 +1,17 @@
+[package]
+name = "sharkey"
+version = "0.1.0"
+edition = "2021"
+license-file = "LICENSE"
+authors = ["Angel Dollface"]
+description= "A tiny library to work with Sharkey from Rust!"
+homepage = "https://github.com/angeldollface/sharkey.rs"
+repository = "https://github.com/angeldollface/sharkey.rs"
+documentation = "https://docs.rs/sharkey/0.1.0"
+readme = "README.markdown"
+
+[dependencies]
+serde_json = "1.0.120"
+reqwest = { version = "0.12.5", features = ["json"] }
+tokio = { version = "1.38.0", features = ["macros"] }
+serde = { version = "1.0.204", features = ["derive"] }
