@@ -20,10 +20,6 @@ use super::aux::UserNote;
 /// structure.
 use super::aux::BadgeRole;
 
-/// Importing the "FediInstance"
-/// structure.
-use super::aux::FediInstance;
-
 /// Importing the "HashMap"
 /// structure from the standard
 /// library.
@@ -32,10 +28,6 @@ use std::collections::HashMap;
 /// Importing the "OnlineStatus"
 /// enum.
 use super::enums::OnlineStatus;
-
-/// Importing the "AvatarDecoration"
-/// structure.
-use super::aux::AvatarDecoration;
 
 /// A structure to capture data
 /// about a Sharkey user. This response
@@ -58,9 +50,11 @@ pub struct SharkeyUser {
     #[serde(rename(deserialize = "avatarBlurhash"))]
     pub avatar_blurhash: Option<String>,
 
-    #[serde(rename(serialize = "avatarDecorations"))]
-    #[serde(rename(deserialize = "avatarDecorations"))]
-    pub avatar_decorations: Vec<AvatarDecoration>,
+    pub description: Option<String>,
+
+    #[serde(rename(serialize = "createdAt"))]
+    #[serde(rename(deserialize = "createdAt"))]
+    pub created_at: String,
 
     #[serde(rename(serialize = "isBot"))]
     #[serde(rename(deserialize = "isBot"))]
@@ -69,8 +63,28 @@ pub struct SharkeyUser {
     #[serde(rename(serialize = "isCat"))]
     #[serde(rename(deserialize = "isCat"))]
     pub is_cat: bool,
-    pub instance: FediInstance,
-    pub emojis: HashMap<String, String>,
+    pub noindex: bool,
+    #[serde(rename(serialize = "isSilenced"))]
+    #[serde(rename(deserialize = "isSilenced"))]
+    pub is_silenced: bool,
+
+    #[serde(rename(serialize = "speakAsCat"))]
+    #[serde(rename(deserialize = "speakAsCat"))]
+    pub speak_as_cat: bool,
+    pub approved: bool,
+
+    #[serde(rename(serialize = "followersCount"))]
+    #[serde(rename(deserialize = "followersCount"))]
+    pub followers_count: u32,
+
+    #[serde(rename(serialize = "followingCount"))]
+    #[serde(rename(deserialize = "followingCount"))]
+    pub following_count: u32,
+    pub emojis: Option<HashMap<String, String>>,
+
+    #[serde(rename(serialize = "notesCount"))]
+    #[serde(rename(deserialize = "notesCount"))]
+    pub note_count: u32,
 
     #[serde(rename(serialize = "onlineStatus"))]
     #[serde(rename(deserialize = "onlineStatus"))]
@@ -78,21 +92,7 @@ pub struct SharkeyUser {
 
     #[serde(rename(serialize = "badgeRoles"))]
     #[serde(rename(deserialize = "badgeRoles"))]
-    pub badge_roles: Vec<BadgeRole>
-}
-
-/// A structure to reflect the status of an
-/// operation that does not return
-/// a JSON response. This response
-/// structure can be used for the following
-/// Sharkey API routes:
-/// - `/notes/reactions/create`
-/// - `/notes/reactions/delete`
-/// - `/notes/delete`
-#[derive(Serialize, Deserialize)]
-pub struct OperationStatus {
-    pub status: u32,
-    pub success: u32
+    pub badge_roles: Option<Vec<BadgeRole>>
 }
 
 /// A structure to return the note

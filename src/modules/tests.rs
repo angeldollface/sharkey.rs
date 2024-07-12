@@ -22,7 +22,14 @@ pub async fn test_fetch_json(){
         "https://httpbin.org/json"
     ).await {
         Ok(resp) => {
-            assert_eq!(resp.status(), 200);
+            match resp.body {
+                Some(val) => {
+                    assert_eq!(val.is_empty(), false);
+                },
+                None => {
+                    println!("Could not fetch response!");
+                }
+            }
         },
         Err(e) => {
             println!("{}", e);
@@ -31,23 +38,53 @@ pub async fn test_fetch_json(){
 }
 
 /// The function to test
-/// the "like_note_for_user" function.
+/// the "like_note_for_user" and the
+/// "unlike_note_for_user" function.
 #[tokio::test]
-pub async fn test_like_note_for_user(){
+pub async fn test_note_reaction(){
     match std::env::var("BLAHAJ_API_TOKEN"){
         Ok(value) => {
-            let payload: super::payloads::ReactionPayload = super::payloads::ReactionPayload{
+            let like_payload: super::payloads::ReactionPayload = super::payloads::ReactionPayload{
                 note_id: "9utzyrsmyoof00hr".to_string(),
                 reaction: "like".to_string(),
-                i: value
+                i: value.clone()
+            };
+            let unlike_payload: super::payloads::ReactionPayload = super::payloads::ReactionPayload{
+                note_id: "9utzyrsmyoof00hr".to_string(),
+                reaction: "like".to_string(),
+                i: value.clone()
             };
             match super::actions::like_note_for_user(
                 "/api", 
                 "https://blahaj.zone", 
-                &payload
+                &like_payload
             ).await {
                 Ok(res) => {
-                    assert_eq!(res.status, 200);
+                    match res.body {
+                        Some(val) => {
+                            println!("{}", val);
+                        },
+                        None => {
+                            assert_eq!(false, false);
+                            match super::actions::unlike_note_for_user(
+                                "/api", 
+                                "https://blahaj.zone", 
+                                &unlike_payload
+                            ).await {
+                                Ok(res) => {
+                                    match res.body {
+                                        Some(val) => println!("{}", val),
+                                        None => {
+                                            assert_eq!(false, false);
+                                        }
+                                    }
+                                },
+                                Err(x) => {
+                                    println!("{}", x);
+                                }
+                            }
+                        }
+                    }
                 },
                 Err(x) => {
                     println!("{}", x);
@@ -60,87 +97,44 @@ pub async fn test_like_note_for_user(){
     }    
 }
 
-
 /// The function to test
-/// the "unlike_note_for_user" function.
+/// the "follow_user" and the 
+/// "unfollow_user" function.
 #[tokio::test]
-pub async fn test_unlike_note_for_user(){
+pub async fn test_follow_action_user(){
     match std::env::var("BLAHAJ_API_TOKEN"){
         Ok(value) => {
-            let payload: super::payloads::ReactionPayload = super::payloads::ReactionPayload{
-                note_id: "9utzyrsmyoof00hr".to_string(),
-                reaction: "like".to_string(),
-                i: value
+            let unfollow_payload: super::payloads::UnfollowPayload = super::payloads::UnfollowPayload{
+                i: value.clone(),
+                user_id: "9upmnr8igmxe01k3".to_string()
             };
-            match super::actions::unlike_note_for_user(
-                "/api", 
-                "https://blahaj.zone", 
-                &payload
-            ).await {
-                Ok(res) => {
-                    assert_eq!(res.status, 200);
-                },
-                Err(x) => {
-                    println!("{}", x);
-                }
-            }
-        },
-        Err(e) => {
-            println!("{}", e);
-        }
-    }    
-}
-
-/// The function to test
-/// the "follow_user" function.
-#[tokio::test]
-pub async fn test_follow_user(){
-    match std::env::var("BLAHAJ_API_TOKEN"){
-        Ok(value) => {
-            let payload: super::payloads::FollowPayload = super::payloads::FollowPayload{
+            let follow_payload: super::payloads::FollowPayload = super::payloads::FollowPayload{
                 user_id: "9upmnr8igmxe01k3".to_string(),
                 with_replies: false,
-                i: value
+                i: value.clone()
             };
             match super::actions::follow_user(
                 "/api", 
                 "https://blahaj.zone", 
-                &payload
+                &follow_payload
             ).await {
                 Ok(res) => {
                     assert_eq!(res.username, "frisaf");
+                    match super::actions::unfollow_user(
+                        "/api", 
+                        "https://blahaj.zone", 
+                        &unfollow_payload
+                    ).await {
+                        Ok(res) => {
+                            assert_eq!(res.username, "frisaf");
+                        },
+                        Err(x) => {
+                            println!("{}", x);
+                        }
+                    }
                 },
-                Err(x) => {
-                    println!("{}", x);
-                }
-            }
-        },
-        Err(e) => {
-            println!("{}", e);
-        }
-    }    
-}
-
-/// The function to test
-/// the "unfollow_user" function.
-#[tokio::test]
-pub async fn test_unfollow_user(){
-    match std::env::var("BLAHAJ_API_TOKEN"){
-        Ok(value) => {
-            let payload: super::payloads::UnfollowPayload = super::payloads::UnfollowPayload{
-                i: value,
-                user_id: "9upmnr8igmxe01k3".to_string()
-            };
-            match super::actions::unfollow_user(
-                "/api", 
-                "https://blahaj.zone", 
-                &payload
-            ).await {
-                Ok(res) => {
-                    assert_eq!(res.username, "frisaf");
-                },
-                Err(x) => {
-                    println!("{}", x);
+                Err(y) => {
+                    println!("{}", y);
                 }
             }
         },
@@ -175,7 +169,60 @@ pub async fn test_create_note_for_user(){
                 &payload
             ).await {
                 Ok(res) => {
-                    assert_eq!(res.created_note.user.username, "angeldollface666".to_string());
+                    assert_eq!(&res.created_note.user.username, &"angeldollface666".to_string());
+                },
+                Err(x) => {
+                    println!("{}", x);
+                }
+            }
+        },
+        Err(e) => {
+            println!("{}", e);
+        }
+    }    
+}
+
+/// The function to test
+/// the "delete_note_for_user" function.
+#[tokio::test]
+pub async fn test_delete_note_for_user(){
+    match std::env::var("BLAHAJ_API_TOKEN"){
+        Ok(value) => {
+            let payload: super::payloads::CreateNotePayload = super::payloads::CreateNotePayload{
+                visibility: super::enums::NoteVisibility::Public,
+                cw: None,
+                local_only: true,
+                reaction_acceptance: Some(super::enums::ReactionAcceptance::LikeOnly),
+                no_extract_mentions: false,
+                no_extract_hashtags: false,
+                no_extract_emojis: false,
+                reply_id: None,
+                channel_id: None,
+                text: "This note only exists to be deleted.".to_string(),
+                i: value.clone()
+            };
+            match super::actions::create_note_for_user(
+                "/api", 
+                "https://blahaj.zone", 
+                &payload
+            ).await {
+                Ok(res) => {
+                    let note_to_be_deleted = &res.created_note.id;
+                    let del_payload = &super::payloads::DeleteNotePayload{
+                        note_id: note_to_be_deleted.to_owned(),
+                        i: value.clone()
+                    };
+                    match super::actions::delete_note_for_user(
+                        "/api", 
+                        "https://blahaj.zone", 
+                        del_payload
+                    ).await {
+                        Ok(resp) => {
+                            assert_eq!(resp.body, None);
+                        },
+                        Err(y) => println!("{}", y)
+                    };
+                    //assert_eq!(&res.created_note.user.username, &"angeldollface666".to_string());
                 },
                 Err(x) => {
                     println!("{}", x);

@@ -26,6 +26,11 @@ pub mod enums;
 pub mod error;
 
 /// Exporting the module
+/// that contains a bridging
+/// type for handling requests.
+pub mod bridge;
+
+/// Exporting the module
 /// containing actions the
 /// user needs to be authenticated
 /// for.
