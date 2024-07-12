@@ -44,20 +44,12 @@ pub async fn test_fetch_json(){
 pub async fn test_note_reaction(){
     match std::env::var("BLAHAJ_API_TOKEN"){
         Ok(value) => {
-            let like_payload: super::payloads::ReactionPayload = super::payloads::ReactionPayload{
-                note_id: "9utzyrsmyoof00hr".to_string(),
-                reaction: "like".to_string(),
-                i: value.clone()
-            };
-            let unlike_payload: super::payloads::ReactionPayload = super::payloads::ReactionPayload{
-                note_id: "9utzyrsmyoof00hr".to_string(),
-                reaction: "like".to_string(),
-                i: value.clone()
-            };
             match super::actions::like_note_for_user(
                 "/api", 
                 "https://blahaj.zone", 
-                &like_payload
+                &value.clone(),
+                "9utzyrsmyoof00hr",
+                "like"
             ).await {
                 Ok(res) => {
                     match res.body {
@@ -69,7 +61,9 @@ pub async fn test_note_reaction(){
                             match super::actions::unlike_note_for_user(
                                 "/api", 
                                 "https://blahaj.zone", 
-                                &unlike_payload
+                                &value.clone(),
+                                "9utzyrsmyoof00hr",
+                                "like"
                             ).await {
                                 Ok(res) => {
                                     match res.body {
@@ -103,27 +97,21 @@ pub async fn test_note_reaction(){
 #[tokio::test]
 pub async fn test_follow_action_user(){
     match std::env::var("BLAHAJ_API_TOKEN"){
-        Ok(value) => {
-            let unfollow_payload: super::payloads::UnfollowPayload = super::payloads::UnfollowPayload{
-                i: value.clone(),
-                user_id: "9upmnr8igmxe01k3".to_string()
-            };
-            let follow_payload: super::payloads::FollowPayload = super::payloads::FollowPayload{
-                user_id: "9upmnr8igmxe01k3".to_string(),
-                with_replies: false,
-                i: value.clone()
-            };
+        Ok(value) => {            
             match super::actions::follow_user(
                 "/api", 
                 "https://blahaj.zone", 
-                &follow_payload
+                &value.clone(),
+                "9upmnr8igmxe01k3"
             ).await {
                 Ok(res) => {
                     assert_eq!(res.username, "frisaf");
                     match super::actions::unfollow_user(
                         "/api", 
                         "https://blahaj.zone", 
-                        &unfollow_payload
+                        &value.clone(),
+                        "9upmnr8igmxe01k3"
+
                     ).await {
                         Ok(res) => {
                             assert_eq!(res.username, "frisaf");
@@ -150,23 +138,14 @@ pub async fn test_follow_action_user(){
 pub async fn test_create_note_for_user(){
     match std::env::var("BLAHAJ_API_TOKEN"){
         Ok(value) => {
-            let payload: super::payloads::CreateNotePayload = super::payloads::CreateNotePayload{
-                visibility: super::enums::NoteVisibility::Public,
-                cw: None,
-                local_only: true,
-                reaction_acceptance: Some(super::enums::ReactionAcceptance::LikeOnly),
-                no_extract_mentions: false,
-                no_extract_hashtags: false,
-                no_extract_emojis: false,
-                reply_id: None,
-                channel_id: None,
-                text: "This note was posted from the test runner of \"Sharkey.rs\"!".to_string(),
-                i: value
-            };
+            
             match super::actions::create_note_for_user(
                 "/api", 
                 "https://blahaj.zone", 
-                &payload
+                &value,
+                &super::enums::NoteVisibility::Public,
+                &Some(super::enums::ReactionAcceptance::LikeOnly),
+                "This note was posted from the \"Sharkey.rs\" test runner."
             ).await {
                 Ok(res) => {
                     assert_eq!(&res.created_note.user.username, &"angeldollface666".to_string());
@@ -188,34 +167,21 @@ pub async fn test_create_note_for_user(){
 pub async fn test_delete_note_for_user(){
     match std::env::var("BLAHAJ_API_TOKEN"){
         Ok(value) => {
-            let payload: super::payloads::CreateNotePayload = super::payloads::CreateNotePayload{
-                visibility: super::enums::NoteVisibility::Public,
-                cw: None,
-                local_only: true,
-                reaction_acceptance: Some(super::enums::ReactionAcceptance::LikeOnly),
-                no_extract_mentions: false,
-                no_extract_hashtags: false,
-                no_extract_emojis: false,
-                reply_id: None,
-                channel_id: None,
-                text: "This note only exists to be deleted.".to_string(),
-                i: value.clone()
-            };
             match super::actions::create_note_for_user(
                 "/api", 
                 "https://blahaj.zone", 
-                &payload
+                &value,
+                &super::enums::NoteVisibility::Public,
+                &Some(super::enums::ReactionAcceptance::LikeOnly),
+                "This note only exists to be deleetd."
             ).await {
                 Ok(res) => {
                     let note_to_be_deleted = &res.created_note.id;
-                    let del_payload = &super::payloads::DeleteNotePayload{
-                        note_id: note_to_be_deleted.to_owned(),
-                        i: value.clone()
-                    };
                     match super::actions::delete_note_for_user(
                         "/api", 
                         "https://blahaj.zone", 
-                        del_payload
+                        &value.clone(),
+                        &note_to_be_deleted
                     ).await {
                         Ok(resp) => {
                             assert_eq!(resp.body, None);

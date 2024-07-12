@@ -53,7 +53,7 @@ pub enum OnlineStatus{
 /// for a note. Needed for the
 /// `UserNote` function
 /// from "./responses.rs".
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Copy)]
 pub enum ReactionAcceptance {
     #[serde(rename(serialize = "likeOnly"))]
     #[serde(rename(deserialize = "likeOnly"))]
@@ -80,7 +80,7 @@ pub enum ReactionAcceptance {
 /// from "./responses.rs" and
 /// the `CreateNotePayload` from
 /// "./payloads.rs".
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Copy)]
 pub enum NoteVisibility {
 
     #[serde(rename(serialize = "home"))]
