@@ -216,3 +216,23 @@ pub async fn test_get_user_info(){
         Err(e) => println!("{}", e)
     };
 }
+
+/// A function to test
+/// the "get_user_from_token"
+/// function.
+#[tokio::test]
+pub async fn test_get_user_from_token(){
+    match std::env::var("BLAHAJ_API_TOKEN"){
+        Ok(val) => {
+            match super::info::get_user_from_token(
+            "/api", 
+            "https://blahaj.zone", 
+            &val
+            ).await {
+                Ok(res) => assert_eq!(res.username, "angeldollface666"),
+                Err(e) => println!("{}", e)
+            };
+        },
+        Err(x) => println!("{}", x)
+    };
+}

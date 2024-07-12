@@ -40,6 +40,7 @@ To understand how to use *Sharkey.rs* in your project, please refer to the proje
 
 - [x] Improved documentation.
 - [x] Added the `get_user_info` function.
+- [x] Added the `get_user_from_token` function.
 - [x] Moved the `Bridge` structure to the `responses.rs` module.
 
 ## NOTE
