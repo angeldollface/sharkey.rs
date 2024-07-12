@@ -8,6 +8,20 @@
 
 This repository contains the code for a small Rust crate to work with Sharkey from Rust. Feel free to follow me on Sharkey [here](https://blahaj.zone/@angeldollface666).
 
+## INSTALLATION
+
+### FOR RUST PROJECTS
+
+To use ***Sharkey.rs*** in your Rust project, add this line to your project's `Cargo.toml`:
+
+```TOML
+sharkey = "0.1.0"
+```
+
+## USAGE
+
+To understand how to use *Sharkey.rs* in your project, please refer to the project's [documentation](https://docs.rs/sharkey/0.1.0). If the documentation does not help you, you can also read the unit tests [here](src/modules/tests.rs).
+
 ## FEATURES
 
 - Fully asynchronous.
