@@ -121,6 +121,9 @@ pub struct UserNote {
     pub clipped_count: u32,
 }
 
+/// A structure to hold information
+/// on any drive files a user may have.
+/// Required by the `UserNote` structure.
 #[derive(Serialize, Deserialize)]
 pub struct DriveFile {
     pub id: String,
@@ -159,6 +162,9 @@ pub struct DriveFile {
     pub user: SharkeyUser,
 }
 
+/// A structure to hold information
+/// on any drive files a user may have.
+/// Required by the `DriveFile` structure.
 #[derive(Serialize, Deserialize)]
 pub struct DriveFolder {
     pub id: String,
@@ -181,6 +187,12 @@ pub struct DriveFolder {
     pub files_count: u32,
     pub parent: Box<Self>
 }
+
+/// A structure to hold information
+/// on the properties of a file in
+/// a user's drive.
+/// Required by the `DriveFile`
+/// structure.
 #[derive(Serialize, Deserialize)]
 pub struct FileProperties {
     pub width: u32,

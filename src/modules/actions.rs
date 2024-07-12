@@ -18,7 +18,8 @@ use super::error::SharkeyErr;
 use super::enums::HTTPMethods;
 
 /// Importing the "fetch_json"
-/// to make network requests.
+/// function to make network 
+/// requests.
 use super::network::fetch_json;
 
 /// Importing the "SharkeyUser"
@@ -51,7 +52,7 @@ use super::payloads::DeleteNotePayload;
 
 /// Attempts to delete a note for a user.
 /// If successful, an instance of the 
-/// `OperationStatus` structure is returned.
+/// `Bridge` structure is returned.
 /// If not, an error is returned.
 pub async fn delete_note_for_user(
     api_base: &str,
@@ -102,7 +103,7 @@ pub async fn create_note_for_user(
 
 /// Attempts to react to a note for a user.
 /// If successful, an instance of the 
-/// `OperationStatus` structure is returned.
+/// `Bridge` structure is returned.
 /// If not, an error is returned.
 pub async fn like_note_for_user(
     api_base: &str,
@@ -123,7 +124,7 @@ pub async fn like_note_for_user(
 
 /// Attempts to reverse a reaction to a note for a user.
 /// If successful, an instance of the 
-/// `OperationStatus` structure is returned.
+/// `Bridge` structure is returned.
 /// If not, an error is returned.
 pub async fn unlike_note_for_user(
     api_base: &str,

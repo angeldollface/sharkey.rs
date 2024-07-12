@@ -45,9 +45,10 @@ use super::enums::HTTPMethods;
 use reqwest::header::CONTENT_TYPE;
 
 /// Attempts to fetch an instance
-/// of the "Response" structure from
+/// of the "Bridge" structure from
 /// the submitted type of request with
 /// the supplied request payload.
+/// If this fails, an error is returned.
 pub async fn fetch_json<T: Serialize>(
     method: &HTTPMethods,
     payload: &T,

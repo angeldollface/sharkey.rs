@@ -40,7 +40,7 @@ pub use modules::actions::*;
 /// network requests.
 pub use modules::network::*;
 
-///Re-exporting the module
+/// Re-exporting the module
 /// that contains serializable
 /// and deserializable responses.
 pub use modules::responses::*;

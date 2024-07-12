@@ -2,15 +2,24 @@
 
 ![GitHub CI](https://github.com/angeldollface/sharkey.rs/actions/workflows/rust.yml/badge.svg)
 
-***A tiny library to work with Sharkey from Rust!***
+***A tiny library to work with Sharkey from Rust asynchronously!***
 
 ## ABOUT
 
 This repository contains the code for a small Rust crate to work with Sharkey from Rust. Feel free to follow me on Sharkey [here](https://blahaj.zone/@angeldollface666).
 
-## STATUS :warning:
+## FEATURES
 
-***HEAVILY WORK IN PROGRESS!***
+- Fully asynchronous.
+- Printable responses via `serde_json`.
+- Inlcudes all important actions a user may want to perform.
+
+## CHANGELOG
+
+### Version 0.1.0
+
+- Initial release.
+- Upload to GitHub.
 
 ## NOTE
 
