@@ -36,6 +36,12 @@ To understand how to use *Sharkey.rs* in your project, please refer to the proje
 - Upload to GitHub.
 - Upload to [crates.io](https://crates.io/crates/sharkey).
 
+### Version 0.2.0
+
+- [x] Improved documentation.
+- [x] Added the `get_user_info` function.
+- [x] Moved the `Bridge` structure to the `responses.rs` module.
+
 ## NOTE
 
 - *Sharkey.rs* by Alexander Abraham a.k.a. *"Angel Dollface"*

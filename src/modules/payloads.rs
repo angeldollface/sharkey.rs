@@ -115,3 +115,16 @@ pub struct CreateNotePayload {
     pub text: String,
     pub i: String
 }
+
+/// This structure holds
+/// the JSON payload parameters
+/// for getting information on a
+/// user. This structure can be
+/// used for the following API routes:
+/// - `/users/show`
+#[derive(Serialize)]
+pub struct UserInfoPayload {
+    pub host: String,
+    pub detailed: bool,
+    pub username: String
+}

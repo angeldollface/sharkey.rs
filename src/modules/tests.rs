@@ -200,3 +200,19 @@ pub async fn test_delete_note_for_user(){
         }
     }    
 }
+
+/// A function to test
+/// the "get_user_info"
+/// function.
+#[tokio::test]
+pub async fn test_get_user_info(){
+    match super::info::get_user_info(
+        "/api", 
+        "https://blahaj.zone", 
+        "blahaj.zone", 
+        "angeldollface666"
+    ).await {
+        Ok(res) => assert_eq!(res.username, "angeldollface666"),
+        Err(e) => println!("{}", e)
+    };
+}

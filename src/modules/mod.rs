@@ -10,6 +10,13 @@ Licensed under the DSL v1.
 /// structures.
 pub mod aux;
 
+/// Exporting the
+/// module that
+/// contains functions
+/// for getting information
+/// on users or notes.
+pub mod info;
+
 /// Exporting the 
 /// test module.
 #[cfg(test)]

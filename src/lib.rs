@@ -14,6 +14,13 @@ pub mod modules;
 /// structures.
 pub use modules::aux::*;
 
+/// Re-exporting the
+/// module that
+/// contains functions
+/// for getting information
+/// on users or notes.
+pub use modules::info::*;
+
 /// Re-exporting the 
 /// module to handle
 /// errors.
