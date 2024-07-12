@@ -34,6 +34,7 @@ To understand how to use *Sharkey.rs* in your project, please refer to the proje
 
 - Initial release.
 - Upload to GitHub.
+- Upload to [crates.io](https://crates.io/crates/sharkey).
 
 ## NOTE
 
