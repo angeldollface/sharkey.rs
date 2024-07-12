@@ -236,3 +236,20 @@ pub async fn test_get_user_from_token(){
         Err(x) => println!("{}", x)
     };
 }
+
+
+
+/// A function to test
+/// the "get_user_notes"
+/// function.
+#[tokio::test]
+pub async fn test_get_user_notes(){
+    match super::info::get_user_notes(
+        "/api", 
+        "https://blahaj.zone",
+        "9u3rd5ayod3s000z"
+    ).await {
+        Ok(res) => assert_eq!(res.is_empty(), false),
+        Err(e) => println!("{}", e)
+    };
+}

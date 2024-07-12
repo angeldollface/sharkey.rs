@@ -4,7 +4,9 @@ a.k.a. "Angel Dollface".
 Licensed under the DSL v1.
 */
 
-use std::collections::HashMap;
+/// Importing the "UserNote"
+/// structure.
+use super::aux::UserNote;
 
 /// Importing the "Bridge"
 /// structure.
@@ -18,6 +20,12 @@ use super::error::SharkeyErr;
 /// enum to make POST requests.
 use super::enums::HTTPMethods;
 
+/// Importing the "HashMap"
+/// structure from the standard
+/// library to submit a simple
+/// payload.
+use std::collections::HashMap;
+
 /// Importing the "fetch_json"
 /// function to make network 
 /// requests.
@@ -30,6 +38,10 @@ use super::responses::SharkeyUser;
 /// Importing the "UserInfoPayload"
 /// structure to attain user information.
 use super::payloads::UserInfoPayload;
+
+/// Importing the "UserNotesPayload"
+/// structure.
+use super::payloads::UserNotesPayload;
 
 /// Attempts to fetch information on a user.
 /// Returns an instance of the `SharkeyUser` structure.
@@ -69,7 +81,9 @@ pub async fn get_user_info(
 }
 
 /// Attempts to retrieve user information 
-/// from the API token submitted.
+/// from the API token submitted. Returns
+/// an instance of the `SharkeyUser` structure.
+/// If the operation fails, an error is returned.
 pub async fn get_user_from_token(
     api_base: &str,
     base_url: &str,
@@ -96,6 +110,47 @@ pub async fn get_user_from_token(
     let result: SharkeyUser = match serde_json::from_str(&body) {
         Ok(result) => result,
         Err(e) => return Err::<SharkeyUser, SharkeyErr>(SharkeyErr::new(&e.to_string()))
+    };
+    Ok(result)
+}
+
+/// Attempts to retrieve user notes
+/// from the user ID submitted. Returns
+/// a vector of instances of the `UserNote`
+/// structure. If the operation fails, an 
+/// error is returned.
+pub async fn get_user_notes(
+    api_base: &str,
+    base_url: &str,
+    user_id: &str
+) -> Result<Vec<UserNote>, SharkeyErr> {
+    let url: String = format!("{}{}/users/notes", base_url, api_base);
+    let payload: UserNotesPayload = UserNotesPayload{
+        user_id: user_id.to_string(),
+        with_replies: false,
+        with_renotes: false,
+        with_files: false,
+        allow_partial: true
+    };
+    let response: Bridge = match fetch_json(
+        &HTTPMethods::POST, 
+        &payload, 
+        &url
+    ).await {
+        Ok(response) => response,
+        Err(e) => return Err::<Vec<UserNote>, SharkeyErr>(SharkeyErr::new(&e.to_string()))
+    };
+    let body: String = match response.body {
+        Some(body) => body,
+        None => {
+            let e: String = "No valid response received!".to_string();
+            return Err::<Vec<UserNote>, SharkeyErr>(SharkeyErr::new(&e.to_string()))
+        }
+    };
+    //println!("{}", &body);
+    let result: Vec<UserNote> = match serde_json::from_str(&body) {
+        Ok(result) => result,
+        Err(e) => return Err::<Vec<UserNote>, SharkeyErr>(SharkeyErr::new(&e.to_string()))
     };
     Ok(result)
 }

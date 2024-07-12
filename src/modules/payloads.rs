@@ -128,3 +128,27 @@ pub struct UserInfoPayload {
     pub detailed: bool,
     pub username: String
 }
+
+/// This structure holds
+/// the JSON payload parameters
+/// for getting information on a
+/// user's notes. This structure can be
+/// used for the following API routes:
+/// - `/users/notes`
+#[derive(Serialize)]
+pub struct UserNotesPayload {
+    #[serde(rename(serialize = "userId"))]
+    pub user_id: String,
+
+    #[serde(rename(serialize = "withReplies"))]
+    pub with_replies: bool,
+
+    #[serde(rename(serialize = "withRenotes"))]
+    pub with_renotes: bool,
+
+    #[serde(rename(serialize = "withFiles"))]
+    pub with_files: bool,
+
+    #[serde(rename(serialize = "allowPartial"))]
+    pub allow_partial: bool
+}
