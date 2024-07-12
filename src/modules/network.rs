@@ -25,7 +25,7 @@ use reqwest::Response;
 /// Importing the "Bridge"
 /// structure to catch
 /// responses of all kinds.
-use super::bridge::Bridge;
+use super::responses::Bridge;
 
 /// Importing the 
 /// "SharkeyErr" structure
@@ -45,7 +45,7 @@ use super::enums::HTTPMethods;
 use reqwest::header::CONTENT_TYPE;
 
 /// Attempts to fetch an instance
-/// of the "Bridge" structure from
+/// of the `Bridge` structure from
 /// the submitted type of request with
 /// the supplied request payload.
 /// If this fails, an error is returned.

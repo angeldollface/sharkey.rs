@@ -25,11 +25,6 @@ pub use modules::error::*;
 pub use modules::enums::*;
 
 /// Re-exporting the module
-/// that contains a bridging
-/// type for handling requests.
-pub use modules::bridge::*;
-
-/// Re-exporting the module
 /// containing actions the
 /// user needs to be authenticated
 /// for.

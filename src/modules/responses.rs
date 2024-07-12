@@ -105,3 +105,18 @@ pub struct CreatedNote {
     #[serde(rename(deserialize = "createdNote"))]
     pub created_note: UserNote
 }
+
+/// A structure
+/// to bridge the gap
+/// between the `Response`
+/// structure from `reqwest`
+/// module and all kinds of
+/// responses. This response structure
+/// can be used for the following Sharkey API routes:
+/// - `/notes/delete`
+/// - `/notes/reactions/create`
+/// - `/notes/reactions/delete`
+#[derive(Serialize, Deserialize)]
+pub struct Bridge{
+    pub body: Option<String>
+}

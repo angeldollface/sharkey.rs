@@ -7,7 +7,7 @@ Licensed under the DSL v1.
 /// Importing the "Bridge"
 /// structure to handle
 /// all kinds of responses.
-use super::bridge::Bridge;
+use super::responses::Bridge;
 
 /// Importing the "SharkeyErr"
 /// structure for handling errors.

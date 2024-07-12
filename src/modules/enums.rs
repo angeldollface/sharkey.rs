@@ -17,7 +17,7 @@ use serde::Deserialize;
 /// in a Rustacean way.
 /// Needed for the
 /// `fetch_json` function
-/// from "./network.rs".
+/// from `./network.rs`.
 #[derive(PartialEq)]
 pub enum HTTPMethods {
     POST,
@@ -28,7 +28,7 @@ pub enum HTTPMethods {
 /// and store the online status
 /// of a user. Needed for the
 /// `SharkeyUser` structure
-/// from "./responses.rs".
+/// from `./responses.rs`.
 #[derive(Serialize, Deserialize)]
 pub enum OnlineStatus{
     #[serde(rename(serialize = "unknown"))]
@@ -52,7 +52,7 @@ pub enum OnlineStatus{
 /// of reaction acceptance
 /// for a note. Needed for the
 /// `UserNote` function
-/// from "./responses.rs".
+/// from `./responses.rs`.
 #[derive(Serialize, Deserialize, Clone, Copy)]
 pub enum ReactionAcceptance {
     #[serde(rename(serialize = "likeOnly"))]
@@ -76,10 +76,10 @@ pub enum ReactionAcceptance {
 /// and store the status
 /// of reaction acceptance
 /// for a note. Needed for the
-/// `UserNote`` function
-/// from "./responses.rs" and
+/// `UserNote` function
+/// from `./responses.rs` and
 /// the `CreateNotePayload` from
-/// "./payloads.rs".
+/// `./payloads.rs`.
 #[derive(Serialize, Deserialize, Clone, Copy)]
 pub enum NoteVisibility {
 

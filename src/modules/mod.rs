@@ -4,7 +4,7 @@ a.k.a. "Angel Dollface".
 Licensed under the DSL v1.
 */
 
-/// Exprting the
+/// Exporting the
 /// structures to 
 /// "help" the main
 /// structures.
@@ -24,11 +24,6 @@ pub mod enums;
 /// module to handle
 /// errors.
 pub mod error;
-
-/// Exporting the module
-/// that contains a bridging
-/// type for handling requests.
-pub mod bridge;
 
 /// Exporting the module
 /// containing actions the
