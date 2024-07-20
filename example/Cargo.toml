@@ -1,0 +1,26 @@
+[package]
+name = "shonkbot"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.38"
+reqwest = "0.12.5"
+serde_json = "1.0.120"
+tokio = { version = "1.38.1", features = ["full"] }
+serde = { version = "1.0.204", features = ["derive"] }
+sharkey = { git = "https://github.com/angeldollface/sharkey.rs.git" }
+
+[toolchain]
+channel = "nightly"
+
+[[bin]]
+name = "shonkbot"
+path = "src/main.rs"
+
+[profile.release]
+lto = true
+strip = true
+opt-level = "s"
+panic = "abort"
+codegen-units = 1
